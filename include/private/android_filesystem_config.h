@@ -94,6 +94,9 @@
 #define AID_CACHE         2001  /* cache access */
 #define AID_DIAG          2002  /* access to diagnostic resources */
 
+#define AID_QCOM_DIAG     2950  /* access to QTI diagnostic resources */
+#define AID_QCOM_ONCRPC   3014  /* can read/write /dev/oncrpc files */
+
 /* The range 2900-2999 is reserved for OEM, and must never be
  * used here */
 #define AID_OEM_RESERVED_START 2900
@@ -228,6 +231,8 @@ static const struct android_id_info android_ids[] = {
     { "shell",         AID_SHELL, },
     { "cache",         AID_CACHE, },
     { "diag",          AID_DIAG, },
+    { "qcom_diag",     AID_QCOM_DIAG, },
+    { "qcom_oncrpc",   AID_QCOM_ONCRPC, },
 
     { "net_bt_admin",  AID_NET_BT_ADMIN, },
     { "net_bt",        AID_NET_BT, },

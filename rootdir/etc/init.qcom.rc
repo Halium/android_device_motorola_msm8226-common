@@ -25,8 +25,8 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# import init.qcom.usb.rc
-# import init.target.rc
+import /init.qcom.usb.rc
+import /init.target.rc
 
 on early-init
     # Create firmware mount point
@@ -60,6 +60,9 @@ on init
     chown root qcom_diag /sys/kernel/dropbox/data
 
 on fs
+    write /dev/wcnss_wlan 1
+    write /sys/module/wlan/parameters/fwpath "sta"
+
     mount_all fstab.qcom
     write /sys/kernel/boot_adsp/boot 1
 
@@ -90,10 +93,10 @@ on post-fs-data
     chmod 0771 /persist
     restorecon_recursive /persist
 
-    chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.4/polling
+    chmod 0666 /sys/devices/platform/msm_sdcc.1/polling
+    chmod 0666 /sys/devices/platform/msm_sdcc.2/polling
+    chmod 0666 /sys/devices/platform/msm_sdcc.3/polling
+    chmod 0666 /sys/devices/platform/msm_sdcc.4/polling
 
     # Chown polling nodes as needed from UI running on system server
     chown system system /sys/devices/platform/msm_sdcc.1/polling
@@ -328,16 +331,16 @@ on boot
     chown system system /sys/class/leds/rgb/control
     chown system system /sys/class/leds/led:flash_0/brightness
     chown system system /sys/class/leds/charging/brightness
-    chmod 0664 /sys/class/leds/red/brightness
-    chmod 0664 /sys/class/leds/red/blink
-    chmod 0664 /sys/class/leds/green/brightness
-    chmod 0664 /sys/class/leds/blue/brightness
-    chmod 0664 /sys/class/leds/white/brightness
-    chmod 0664 /sys/class/leds/white/blink
-    chmod 0664 /sys/class/leds/rgb/control
-    chmod 0664 /sys/class/leds/led:flash_0/brightness
-    chmod 0664 /sys/class/leds/charging/brightness
-    chmod 0664 /sys/class/leds/lcd-backlight/brightness
+    chmod 0666 /sys/class/leds/red/brightness
+    chmod 0666 /sys/class/leds/red/blink
+    chmod 0666 /sys/class/leds/green/brightness
+    chmod 0666 /sys/class/leds/blue/brightness
+    chmod 0666 /sys/class/leds/white/brightness
+    chmod 0666 /sys/class/leds/white/blink
+    chmod 0666 /sys/class/leds/rgb/control
+    chmod 0666 /sys/class/leds/led:flash_0/brightness
+    chmod 0666 /sys/class/leds/charging/brightness
+    chmod 0666 /sys/class/leds/lcd-backlight/brightness
 
     # Enable writing to led blink node from userspace
     chown system system /sys/class/leds/red/blink
@@ -389,37 +392,55 @@ on boot
     # Switch to interactive and let PowerHAL configure it
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
     chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/boost
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/boost
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
     chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
     chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
     chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
     chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
     chown system system /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
     chown system system /sys/devices/system/cpu/cpufreq/interactive/sync_freq
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/sync_freq
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/sync_freq
     chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/target_loads
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/target_loads
     chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_slack
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/timer_slack
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/timer_slack
     chown system system /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
     chown system system /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load
+    chmod 0666 /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+    #Vibrator
+    chmod 0666 /sys/class/timed_output/vibrator/enable
+    
+    #LEDs
+    chmod 0666 /sys/class/leds/red/blink
+    chmod 0666 /sys/class/leds/red/brightness
+    chmod 0666 /sys/class/leds/green/blink
+    chmod 0666 /sys/class/leds/green/brightness
+    chmod 0666 /sys/class/leds/blue/blink
+    chmod 0666 /sys/class/leds/blue/brightness
+    
+    #torch
+    chmod 0666 /sys/class/leds/led:switch/brightness
+    chmod 0666 /sys/class/leds/torch-light0/brightness
+    chmod 0666 /sys/class/leds/torch-light1/brightness
+    chmod 0666 /sys/class/leds/led:torch_0/brightness
+    chmod 0666 /sys/class/leds/led:torch_1/brightness
 
 # Services start here
 
@@ -427,7 +448,6 @@ service adsprpcd /system/bin/adsprpcd
     class main
     user media
     group media
-    disabled
 
 service atvc_core /system/bin/dbvc_atvc_property_set
     class core
@@ -452,17 +472,17 @@ service batt_health /system/bin/batt_health
     group mot_pwric
     disabled
 
-on property:bluetooth.hciattach=false
-    setprop bluetooth.status off
+#on property:bluetooth.hciattach=false
+#    setprop bluetooth.status off
 
-on property:bluetooth.hciattach=true
-    start hciattach
+#on property:bluetooth.hciattach=true
+#    start hciattach
 
 service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
     class late_start
     user bluetooth
     group bluetooth net_bt_admin
-    disabled
+#    disabled
     oneshot
 
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
@@ -487,14 +507,13 @@ service dump_pds /system/bin/dump_pds.sh
     disabled
     oneshot
 
-service ril-daemon /system/bin/rild
-    class main
-    socket rild stream 660 root radio
-    socket rild-debug stream 660 radio system
-    socket cutback stream 660 media radio
-    user root
-    group radio cache inet misc audio sdcard_rw qcom_oncrpc qcom_diag log net_raw
-    disabled
+#service ril-daemon /system/bin/rild
+#    class main
+#    socket rild stream 660 root radio
+#    socket rild-debug stream 660 radio system
+#    socket cutback stream 660 media radio
+#    user root
+#    group radio cache inet misc audio sdcard_rw qcom_oncrpc qcom_diag log net_raw
 
 service ril-daemon1 /system/bin/rild -c 2
     class main
@@ -509,7 +528,6 @@ service rild1-wrapper /system/bin/sh /system/etc/init.qcom.ril.sh
     user root
     group root
     oneshot
-    disabled
 
 service mmi-touch-sh /system/bin/sh /init.mmi.touch.sh synaptics aps
     class late_start
@@ -533,12 +551,11 @@ service netmgrd /system/bin/netmgrd
     class main
     user root
     group root wifi wakelock radio
-    disabled
 
-#service qcamerasvr /system/bin/mm-qcamera-daemon
-#    class late_start
-#    user camera
-#    group camera system inet input graphics
+service qcamerasvr /system/bin/mm-qcamera-daemon
+    class late_start
+    user camera
+    group camera system inet input graphics
 
 service qmuxd /system/bin/qmuxd
     class main
@@ -568,17 +585,16 @@ service thermal-engine /system/bin/thermal-engine -c /etc/thermal-engine-8226.co
     user root
     group root
 
-service time_daemon /system/bin/time_daemon
-    class late_start
-    user root
-    group root
+#service time_daemon /system/bin/time_daemon
+#    class late_start
+#    user root
+#    group root
 
 service wcnss-service /system/bin/wcnss_service
     class late_start
     user root
     group system wifi
     oneshot
-    disabled
 
 # WPA
 service p2p_supplicant /system/bin/wpa_supplicant \
@@ -693,3 +709,22 @@ on property:sys.boot_completed=1
 
     rm /data/system/default_values
     start mpdecision
+
+service minimedia /system/bin/minimediaservice
+    class main
+    user media
+    group audio camera
+    ioprio rt 4
+#   hack to make recorded video playback work
+    setenv LD_PRELOAD /system/lib/libOmxVdec.so
+    disabled
+
+service miniaf /system/bin/miniafservice
+    class core
+    user root
+    group audio
+
+service minisf /system/bin/minisfservice
+    class main
+    user system
+    group graphics

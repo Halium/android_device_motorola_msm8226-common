@@ -1,0 +1,8 @@
+/{,android/}firmware/image/venus.mdt r,
+/{,android/}firmware/image/venus.b00 r,
+/{,android/}firmware/image/venus.b01 r,
+/{,android/}firmware/image/venus.b02 r,
+/{,android/}firmware/image/venus.b03 r,
+/{,android/}firmware/image/venus.b04 r,
+/sys/devices/soc/ce0000.qcom,venus/** rw,
+/sys/devices/soc/ce0000.qcom,venus/firmware/** rw,
